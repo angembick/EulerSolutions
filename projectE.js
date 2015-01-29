@@ -470,6 +470,33 @@ $(document).ready(function(){
 
 		alert(sum);
 
+	function problem14(){
+		var bigSequence = 0;
+		var startNumber = 0;
+		for(var i=999999; i>0; i-=2){
+			if((compute(i,0))>bigSequence){
+				bigSequence = compute(i,0);
+				startNumber = i;
+			}
+		}
+
+		alert(startNumber+' - '+bigSequence);
+
+		function compute(integer,count){
+			var counted = 0;
+			if(integer % 2 === 0){
+				counted = compute((integer/2),(count+1));
+			}
+			else if(integer === 1){
+				return count;
+			}
+			else{
+				counted = compute(((integer*3)+1),(count+1));
+			}
+
+			return counted;
+		}
+	};
 
 
 	};
