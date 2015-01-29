@@ -1,12 +1,12 @@
 $(document).ready(function(){
 	
-	function insertBlogs(thisUrl){
+	function insertBlogs(thisUrl,lastIndex){
       $.ajax({
         type: "GET",
         url: thisUrl,
         success: function(response) {
          	 //populate the country array with blog content
-         	for(var i = 0; i <response.items.length; i++){
+         	for(var i = lastIndex; i <response.items.length; i++){
             
 	          //create row for every third container or id its the last item
 	          if((i%3 === 0)){
@@ -38,20 +38,21 @@ $(document).ready(function(){
 
 				//still inside success call
 			nextPageToken = response.nextPageToken ;
+			lastIndex = i;
 		   }
 
 		})
 	}; 
 
 	var nextPageToken = null;
-	insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ");   
+	insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", lastIndex);   
 
 
 
 	$(window).scroll(function(){
 		if($(window).scrollTop() + $(window).height() > $(document).height() - 100){
 			if(nextPageToken!==null){
-				nextPageToken = insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?pageToken="+ nextPageToken+"&fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ");
+				insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?pageToken="+ nextPageToken+"&fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", (lastIndex+1);
 			}
 		}
 	});
