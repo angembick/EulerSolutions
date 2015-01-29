@@ -39,6 +39,8 @@ $(document).ready(function(){
 
 				//still inside success call
 			nextPageToken = response.nextPageToken ;
+
+		alert(nextPageToken);
 		   }
 
 		})
