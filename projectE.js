@@ -33,12 +33,12 @@ $(document).ready(function(){
 	          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
 	          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
 
-
+	          
+			lastIndex = i;
 			}
 
 				//still inside success call
 			nextPageToken = response.nextPageToken ;
-			lastIndex = i;
 		   }
 
 		})
