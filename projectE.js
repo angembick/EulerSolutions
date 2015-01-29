@@ -1,9 +1,9 @@
 $(document).ready(function(){
 	
-	function insertBlogs(){
+	function insertBlogs(thisUrl){
       $.ajax({
         type: "GET",
-        url: "https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?startDate=2015-01-19T12%3A59%3A00-08%3A00&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ",
+        url: thisUrl,
         success: function(response) {
          	 //populate the country array with blog content
          	for(var i = 0; i <response.items.length; i++){
@@ -35,11 +35,26 @@ $(document).ready(function(){
 
 
 			}
+
+				//still inside success call
+			return response.nextPageToken ;
 		   }
+
 		})
 	}; 
 
-	insertBlogs();   
+
+	var nextPageToken = insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ");   
+
+
+
+	$(window).scroll(function(){
+		if($(window).scrolTop()+ $(window).height > $(document).height - 100){
+			if(nextPageToken!==null){
+				nextPageToken = insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?pageToken="+ nextPageToken+"&fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ");
+			}
+		}
+	});
 
 	var eulerSolutions=[];
 	eulerSolutions.push('');
@@ -59,6 +74,7 @@ $(document).ready(function(){
 	eulerNthPerson.push('126635');//11
 
 	eulerNthPerson.push('122102');//13
+	eulerNthPerson.push('120062');//14
 
 	function problem1(){
 		var total = 0;
@@ -469,6 +485,7 @@ $(document).ready(function(){
 		sum = (sum.toString()).slice(0,11);
 
 		alert(sum);
+	};
 
 	function problem14(){
 		var bigSequence = 0;
@@ -498,8 +515,6 @@ $(document).ready(function(){
 		}
 	};
 
-
-	};
 	//problem12();
 
 
