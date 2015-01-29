@@ -37,14 +37,14 @@ $(document).ready(function(){
 			}
 
 				//still inside success call
-			return response.nextPageToken ;
+			nextPageToken = response.nextPageToken ;
 		   }
 
 		})
 	}; 
 
-
-	var nextPageToken = insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ");   
+	var nextPageToken = null;
+	insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ");   
 
 
 
