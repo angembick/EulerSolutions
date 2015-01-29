@@ -6,7 +6,7 @@ $(document).ready(function(){
         url: thisUrl,
         success: function(response) {
          	 //populate the country array with blog content
-         	for(var b = lastIndex; b <response.items.length; b++ & i++ ){
+         	for(var b = 0; b <response.items.length; b++ & i++ ){
             
 	          //create row for every third container or id its the last item
 	          if((i%3 === 0)){
