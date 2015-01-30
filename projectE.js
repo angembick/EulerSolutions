@@ -6,7 +6,7 @@ $(document).ready(function(){
         url: thisUrl,
         success: function(response) {
          	 //populate the country array with blog content
-         	for(var b = 0; b <response.items.length; b++ & lastIndex++){
+         	for(var b = 0; b <response.items.length; b++ & lastIndex++ & i++){
             
 	          //create row for every third container or id its the last item
 	          if((i%3 === 0)){
@@ -32,7 +32,6 @@ $(document).ready(function(){
 	          $('<i></i>').addClass('glyphicon glyphicon-question-sign panel-title').attr('data-toggle','collapse').attr('data-target','#question'+i).appendTo('.postsText'+i+' .panel-heading');
 	          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
 	          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
-
 			}
 
 				//still inside success call
