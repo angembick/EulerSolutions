@@ -35,7 +35,7 @@ $(document).ready(function(){
 				}
 
 					//still inside success call
-				if(!response.nextPageToken){
+				if(thisSession.hasOwnProperty(response.nextPageToken)){
 					alert('here!');
 				}
 				else{
