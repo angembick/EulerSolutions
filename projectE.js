@@ -7,40 +7,46 @@ $(document).ready(function(){
         success: function(response) {
          	 //populate the country array with blog content
          	for(var b = 0; b <response.items.length; b++ & lastIndex++ & i++){
-            
-	          //create row for every third container or id its the last item
-	          if((i%3 === 0)){
-	          	$('<div>').addClass('row').appendTo('.problems');
-	          }
-	          //close row
-	          else if((i-1)%3 === 0 || (i=== response.items.length-1)){
-	          	$('</div>').appendTo('.problems');
-	          }
+	            
+		          //create row for every third container or id its the last item
+		          if((i%3 === 0)){
+		          	$('<div>').addClass('row').appendTo('.problems');
+		          }
+		          //close row
+		          else if((i-1)%3 === 0 || (i=== response.items.length-1)){
+		          	$('</div>').appendTo('.problems');
+		          }
 
-	          //open a div for blog unique with the location in the response array
-	          $('<div></div>').addClass('posts'+i+' container well col-sm-3 col-sm-offset-1').appendTo('.problems');
+		          //open a div for blog unique with the location in the response array
+		          $('<div></div>').addClass('posts'+i+' container well col-sm-3 col-sm-offset-1').appendTo('.problems');
 
-	          //add a div for the post content
-	          $('<div></div>').addClass('postsText postsText'+i).appendTo('.posts'+i);
+		          //add a div for the post content
+		          $('<div></div>').addClass('postsText postsText'+i).appendTo('.posts'+i);
 
-	          //Add titles
-	          $('.postsText'+i).append("<h2>" + response.items[i].title + "</h2>");
-	          //create dropdown div and show text when clicked
-	          $('<div></div>').addClass('panel-group').appendTo('.postsText'+i);
-	          $('<div ></div').addClass('panel panel-success').appendTo('.postsText'+i+' .panel-group');
-	          $('<div></div>').addClass('panel-heading text-center').appendTo('.postsText'+i+' .panel-success');
-	          $('<i></i>').addClass('glyphicon glyphicon-question-sign panel-title').attr('data-toggle','collapse').attr('data-target','#question'+i).appendTo('.postsText'+i+' .panel-heading');
-	          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
-	          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
-			}
+		          //Add titles
+		          $('.postsText'+i).append("<h2>" + response.items[i].title + "</h2>");
+		          //create dropdown div and show text when clicked
+		          $('<div></div>').addClass('panel-group').appendTo('.postsText'+i);
+		          $('<div ></div').addClass('panel panel-success').appendTo('.postsText'+i+' .panel-group');
+		          $('<div></div>').addClass('panel-heading text-center').appendTo('.postsText'+i+' .panel-success');
+		          $('<i></i>').addClass('glyphicon glyphicon-question-sign panel-title').attr('data-toggle','collapse').attr('data-target','#question'+i).appendTo('.postsText'+i+' .panel-heading');
+		          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
+		          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
+				}
 
-				//still inside success call
-			nextPageToken = response.nextPageToken ;
-		   }
+					//still inside success call
+				if(response.nextPageToken != null){
+					nextPageToken = response.nextPageToken ;
+				}
+				else{
+					boolToken = false;
+				}
+		    }
 
 		})
 	}; 
 
+	var boolToken = true;
 	var nextPageToken = null;
 	var lastIndex =0;
 	insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", lastIndex);   
@@ -49,7 +55,7 @@ $(document).ready(function(){
 
 	$(window).scroll(function(){
 		if($(window).scrollTop() + $(window).height() > $(document).height() - 100){
-			if(nextPageToken!= null){
+			if((nextPageToken!= null)& (boolToken)){
 				insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?pageToken="+ nextPageToken+"&fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", (lastIndex+1));
 			}
 		}
