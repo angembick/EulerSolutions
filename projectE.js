@@ -35,8 +35,8 @@ $(document).ready(function(){
 				}
 
 					//still inside success call
-				if(response.nextPageToken != null){
-					nextPageToken = response.nextPageToken ;
+				if(!response.nextPageToken){
+					alert('here!');
 				}
 				else{
 					boolToken = false;
