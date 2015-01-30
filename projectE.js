@@ -33,7 +33,7 @@ $(document).ready(function(){
 	          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
 	          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
 
-	          
+
 			lastIndex = i;
 			}
 
@@ -52,7 +52,7 @@ $(document).ready(function(){
 
 	$(window).scroll(function(){
 		if($(window).scrollTop() + $(window).height() > $(document).height() - 100){
-			if(nextPageToken!==null){
+			if(nextPageToken!= null){
 				insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?pageToken="+ nextPageToken+"&fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", (lastIndex+1));
 			}
 		}
