@@ -36,17 +36,16 @@ $(document).ready(function(){
 
 					//still inside success call
 				if(response.hasOwnProperty('nextPageToken')){
-					alert('here!');
+					nextPageToken = response.nextPageToken;
 				}
 				else{
-					boolToken = false;
+					nextPageToken = null;
 				}
 		    }
 
 		})
 	}; 
 
-	var boolToken = true;
 	var nextPageToken = null;
 	var lastIndex =0;
 	insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", lastIndex);   
@@ -55,7 +54,7 @@ $(document).ready(function(){
 
 	$(window).scroll(function(){
 		if($(window).scrollTop() + $(window).height() > $(document).height() - 100){
-			if((nextPageToken!= null)& (boolToken)){
+			if(nextPageToken!= null){
 				insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?pageToken="+ nextPageToken+"&fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", (lastIndex+1));
 			}
 		}
