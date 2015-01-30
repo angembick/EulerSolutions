@@ -1,12 +1,12 @@
 $(document).ready(function(){
 	
-	function insertBlogs(thisUrl,lastIndex){
+	function insertBlogs(thisUrl,i){
       $.ajax({
         type: "GET",
         url: thisUrl,
         success: function(response) {
          	 //populate the country array with blog content
-         	for(var i = lastIndex; i <response.items.length; i++){
+         	for(var b = 0; b <response.items.length; b++ & lastIndex++){
             
 	          //create row for every third container or id its the last item
 	          if((i%3 === 0)){
@@ -33,8 +33,6 @@ $(document).ready(function(){
 	          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
 	          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
 
-
-			lastIndex = i;
 			}
 
 				//still inside success call
