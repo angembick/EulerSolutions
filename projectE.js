@@ -79,6 +79,8 @@ $(document).ready(function(){
 
 	eulerNthPerson.push('122102');//13
 	eulerNthPerson.push('120062');//14
+	
+	eulerNthPerson.push('127007');//16
 
 	function problem1(){
 		var total = 0;
@@ -519,7 +521,44 @@ $(document).ready(function(){
 		}
 	};
 
-	//problem12();
+	<!--
+
+
+
+
+
+
+
+
+
+	-->
+	//problem15();!!!!
+
+
+
+	function problem16(exp){
+		var	total = 0,
+			bigString= '';
+
+		for(var i = 0, two = str2bigInt('2',10), num = str2bigInt('1',10); i<exp; i++){
+			num = mult(num,two);
+		}
+
+		bigString = bigInt2str(num,10);
+
+		num = bigString.split('');
+			console.log(num);
+
+		for(var j=0; j<num.length;j++){
+			total += parseInt(num[j]);
+		}
+		console.log(total);
+	
+	//call this function on the desired exponent of 2
+	//e.g. problem16(1000);
+	}
+
+	//problem16(1000);
 
 
 
