@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	//test commit
+	//another
 	function insertBlogs(thisUrl,i){
       $.ajax({
         type: "GET",
