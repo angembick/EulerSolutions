@@ -1,45 +1,65 @@
 $(document).ready(function(){
 	
-	function insertBlogs(){
+	//test commit
+	function insertBlogs(thisUrl,i){
       $.ajax({
         type: "GET",
-        url: "https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?startDate=2015-01-19T12%3A59%3A00-08%3A00&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ",
+        url: thisUrl,
         success: function(response) {
          	 //populate the country array with blog content
-         	for(var i = 0; i <response.items.length; i++){
-            
-	          //create row for every third container or id its the last item
-	          if((i%3 === 0)){
-	          	$('<div>').addClass('row').appendTo('.problems');
-	          }
-	          //close row
-	          else if((i-1)%3 === 0 || (i=== response.items.length-1)){
-	          	$('</div>').appendTo('.problems');
-	          }
+         	for(var b = 0; b <response.items.length; b++ & lastIndex++ & i++){
+	            
+		          //create row for every third container or id its the last item
+		          if((i%3 === 0)){
+		          	$('<div>').addClass('row').appendTo('.problems');
+		          }
+		          //close row
+		          else if((i-1)%3 === 0 || (i=== response.items.length-1)){
+		          	$('</div>').appendTo('.problems');
+		          }
 
-	          //open a div for blog unique with the location in the response array
-	          $('<div></div>').addClass('posts'+i+' container well col-sm-3 col-sm-offset-1').appendTo('.problems');
+		          //open a div for blog unique with the location in the response array
+		          $('<div></div>').addClass('posts'+i+' container well col-sm-3 col-sm-offset-1').appendTo('.problems');
 
-	          //add a div for the post content
-	          $('<div></div>').addClass('postsText postsText'+i).appendTo('.posts'+i);
+		          //add a div for the post content
+		          $('<div></div>').addClass('postsText postsText'+i).appendTo('.posts'+i);
 
-	          //Add titles
-	          $('.postsText'+i).append("<h2>" + response.items[i].title + "</h2>");
-	          //create dropdown div and show text when clicked
-	          $('<div></div>').addClass('panel-group').appendTo('.postsText'+i);
-	          $('<div ></div').addClass('panel panel-success').appendTo('.postsText'+i+' .panel-group');
-	          $('<div></div>').addClass('panel-heading text-center').appendTo('.postsText'+i+' .panel-success');
-	          $('<i></i>').addClass('glyphicon glyphicon-question-sign panel-title').attr('data-toggle','collapse').attr('data-target','#question'+i).appendTo('.postsText'+i+' .panel-heading');
-	          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
-	          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
+		          //Add titles
+		          $('.postsText'+i).append("<h2>" + response.items[i].title + "</h2>");
+		          //create dropdown div and show text when clicked
+		          $('<div></div>').addClass('panel-group').appendTo('.postsText'+i);
+		          $('<div ></div').addClass('panel panel-success').appendTo('.postsText'+i+' .panel-group');
+		          $('<div></div>').addClass('panel-heading text-center').appendTo('.postsText'+i+' .panel-success');
+		          $('<i></i>').addClass('glyphicon glyphicon-question-sign panel-title').attr('data-toggle','collapse').attr('data-target','#question'+i).appendTo('.postsText'+i+' .panel-heading');
+		          $('<div></div>').addClass('panel-collapse collapse').attr('id','question'+i).appendTo('.postsText'+i+' .panel-success');
+		          $('<div>'+response.items[i].content+'</div>').addClass('panel-body').appendTo('.postsText'+i+' .panel-collapse');
+				}
 
+					//still inside success call
+				if(response.hasOwnProperty('nextPageToken')){
+					nextPageToken = response.nextPageToken;
+				}
+				else{
+					nextPageToken = null;
+				}
+		    }
 
-			}
-		   }
 		})
 	}; 
 
-	insertBlogs();   
+	var nextPageToken = null;
+	var lastIndex =0;
+	insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", lastIndex);   
+
+
+
+//	$(window).scroll(function(){
+//		if($(window).scrollTop() + $(window).height() > $(document).height() - 100){
+//			if(nextPageToken!= null){
+//				insertBlogs("https://www.googleapis.com/blogger/v3/blogs/2096447250273390307/posts?pageToken="+ nextPageToken+"&fetchBodies=true&startDate=2015-01-15T00%3A00%3A00-00%3A00&fields=items(content%2Ctitle)%2CnextPageToken&maxResults=9&key=AIzaSyBZGvhqAz0grBbzAbGdI_htb72q8uA_KlQ", (lastIndex+1));
+//			}
+//		}
+//	});
 
 	var eulerSolutions=[];
 	eulerSolutions.push('');
@@ -59,6 +79,9 @@ $(document).ready(function(){
 	eulerNthPerson.push('126635');//11
 
 	eulerNthPerson.push('122102');//13
+	eulerNthPerson.push('120062');//14
+	
+	eulerNthPerson.push('127007');//16
 
 	function problem1(){
 		var total = 0;
@@ -469,11 +492,74 @@ $(document).ready(function(){
 		sum = (sum.toString()).slice(0,11);
 
 		alert(sum);
-
-
-
 	};
-	//problem12();
+
+	function problem14(){
+		var bigSequence = 0;
+		var startNumber = 0;
+		for(var i=999999; i>0; i-=2){
+			if((compute(i,0))>bigSequence){
+				bigSequence = compute(i,0);
+				startNumber = i;
+			}
+		}
+
+		alert(startNumber+' - '+bigSequence);
+
+		function compute(integer,count){
+			var counted = 0;
+			if(integer % 2 === 0){
+				counted = compute((integer/2),(count+1));
+			}
+			else if(integer === 1){
+				return count;
+			}
+			else{
+				counted = compute(((integer*3)+1),(count+1));
+			}
+
+			return counted;
+		}
+	};
+
+	<!--
+
+
+
+
+
+
+
+
+
+	-->
+	//problem15();!!!!
+
+
+
+	function problem16(exp){
+		var	total = 0,
+			bigString= '';
+
+		for(var i = 0, two = str2bigInt('2',10), num = str2bigInt('1',10); i<exp; i++){
+			num = mult(num,two);
+		}
+
+		bigString = bigInt2str(num,10);
+
+		num = bigString.split('');
+			console.log(num);
+
+		for(var j=0; j<num.length;j++){
+			total += parseInt(num[j]);
+		}
+		console.log(total);
+	
+	//call this function on the desired exponent of 2
+	//e.g. problem16(1000);
+	}
+
+	//problem16(1000);
 
 
 
